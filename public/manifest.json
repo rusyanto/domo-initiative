@@ -24,9 +24,10 @@
   "theme_color": "#000000",
   "background_color": "#ffffff",
   "size": {
-    "width": 5,
+    "width": 6,
     "height": 3
   },
+  "fullpage": true,
   "mapping": [],
   "id": "d7ac3bc2-6e7f-4602-94d1-cdd2e66d89b3"
 }

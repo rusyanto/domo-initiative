@@ -56,9 +56,12 @@ export default function SimpleTabs() {
     <div className={classes.root}>
       <AppBar position="static">
         <Tabs variant="fullWidth" value={value} onChange={handleChange} aria-label="simple tabs example">
-          <Tab label="Item One" {...a11yProps(0)} />
-          <Tab label="Item Two" {...a11yProps(1)} />
-          <Tab label="Item Three" {...a11yProps(2)} />
+          <Tab label="Initiative Objective" {...a11yProps(0)} />
+          <Tab label="Buesiness Questions & Metrics" {...a11yProps(1)} />
+          <Tab label="Wireframe" {...a11yProps(2)} />
+          <Tab label="Metric Mapping" {...a11yProps(3)} />
+          <Tab label="Initiative Profile" {...a11yProps(4)} />
+          <Tab label="Change - Feedback Log" {...a11yProps(5)} />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
@@ -69,6 +72,15 @@ export default function SimpleTabs() {
       </TabPanel>
       <TabPanel value={value} index={2}>
         Item Three
+      </TabPanel>
+      <TabPanel value={value} index={3}>
+        Item Four
+      </TabPanel>
+      <TabPanel value={value} index={4}>
+        Item Five
+      </TabPanel>
+      <TabPanel value={value} index={5}>
+        Item Six
       </TabPanel>
     </div>
   );
