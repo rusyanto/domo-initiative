@@ -42,6 +42,9 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
   },
+  colorPrimary: {
+    backgroundColor: theme.palette.background.blue,
+  }
 }));
 
 export default function SimpleTabs() {
@@ -54,10 +57,10 @@ export default function SimpleTabs() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="static" classes={classes}>
         <Tabs variant="fullWidth" value={value} onChange={handleChange} aria-label="simple tabs example">
           <Tab label="Initiative Objective" {...a11yProps(0)} />
-          <Tab label="Buesiness Questions & Metrics" {...a11yProps(1)} />
+          <Tab label="Business Questions & Metrics" {...a11yProps(1)} />
           <Tab label="Wireframe" {...a11yProps(2)} />
           <Tab label="Metric Mapping" {...a11yProps(3)} />
           <Tab label="Initiative Profile" {...a11yProps(4)} />
