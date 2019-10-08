@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -40,12 +40,19 @@ function a11yProps(index) {
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
+    color: theme.palette.text.primary,
     backgroundColor: theme.palette.background.paper,
   },
   colorPrimary: {
-    backgroundColor: theme.palette.background.blue,
+    backgroundColor: theme.palette.background.gray,
   }
 }));
+
+const WorkTab = withStyles({
+  root: {
+    color: '#fff',
+  }
+})(props => <Tab {...props} />);
 
 export default function SimpleTabs() {
   const classes = useStyles();
@@ -58,13 +65,13 @@ export default function SimpleTabs() {
   return (
     <div className={classes.root}>
       <AppBar position="static" classes={classes}>
-        <Tabs variant="fullWidth" value={value} onChange={handleChange} aria-label="simple tabs example">
-          <Tab label="Initiative Objective" {...a11yProps(0)} />
-          <Tab label="Business Questions & Metrics" {...a11yProps(1)} />
-          <Tab label="Wireframe" {...a11yProps(2)} />
-          <Tab label="Metric Mapping" {...a11yProps(3)} />
-          <Tab label="Initiative Profile" {...a11yProps(4)} />
-          <Tab label="Change - Feedback Log" {...a11yProps(5)} />
+        <Tabs variant="fullWidth" value={value} onChange={handleChange} aria-label="work tabs">
+          <WorkTab label="Initiative Objective" {...a11yProps(0)} />
+          <WorkTab label="Business Questions & Metrics" {...a11yProps(1)} />
+          <WorkTab label="Wireframe" {...a11yProps(2)} />
+          <WorkTab label="Metric Mapping" {...a11yProps(3)} />
+          <WorkTab label="Initiative Profile" {...a11yProps(4)} />
+          <WorkTab label="Change - Feedback Log" {...a11yProps(5)} />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>

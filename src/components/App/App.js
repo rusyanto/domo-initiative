@@ -7,7 +7,11 @@ import TabPanel from '../TabPanel';
 const theme = createMuiTheme({
   palette: {
     background: {
-      blue: '#99ccee',
+      gray: '#555',
+    },
+    text: {
+      primary: 'rgba(0, 0, 0, 0.8)',
+      secondary: 'rgba(0, 0, 0, 0.4)'
     }
   }
 });
