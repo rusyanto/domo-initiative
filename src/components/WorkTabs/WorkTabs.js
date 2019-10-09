@@ -5,7 +5,12 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
+import TabPanel0 from '../TabPanel0';
+import TabPanel1 from '../TabPanel1';
+import TabPanel2 from '../TabPanel2';
+import TabPanel3 from '../TabPanel3';
+import TabPanel4 from '../TabPanel4';
+import TabPanel5 from '../TabPanel5';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -19,7 +24,7 @@ function TabPanel(props) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      <Box p={3}>{children}</Box>
+      {children}
     </Typography>
   );
 }
@@ -54,7 +59,7 @@ const WorkTab = withStyles({
   }
 })(props => <Tab {...props} />);
 
-export default function SimpleTabs() {
+export default function WorkTabs() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -75,22 +80,22 @@ export default function SimpleTabs() {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        Item One
+        <TabPanel0 />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item Two
+        <TabPanel1 />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Item Three
+        <TabPanel2 />
       </TabPanel>
       <TabPanel value={value} index={3}>
-        Item Four
+        <TabPanel3 />
       </TabPanel>
       <TabPanel value={value} index={4}>
-        Item Five
+        <TabPanel4 />
       </TabPanel>
       <TabPanel value={value} index={5}>
-        Item Six
+        <TabPanel5 />
       </TabPanel>
     </div>
   );

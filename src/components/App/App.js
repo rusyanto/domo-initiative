@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
-import TabPanel from '../TabPanel';
+import WorkTabs from '../WorkTabs';
 
 const theme = createMuiTheme({
   palette: {
@@ -19,7 +19,7 @@ const theme = createMuiTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <TabPanel />
+      <WorkTabs />
     </ThemeProvider>
   );
 }
