@@ -5,6 +5,22 @@ import { ThemeProvider } from '@material-ui/styles';
 import WorkTabs from '../WorkTabs';
 
 const theme = createMuiTheme({
+  overrides: {
+    MuiInputLabel: {
+      root: {
+        '&$focused': {
+          color: '#4e8cba'
+        }
+      }
+    },
+    MuiInput: {
+      underline: {
+        '&:after': {
+          borderBottomColor: '#4e8cba'
+        }
+      }
+    }
+  },
   palette: {
     background: {
       gray: '#555',
