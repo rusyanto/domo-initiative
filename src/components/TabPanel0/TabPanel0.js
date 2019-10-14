@@ -8,7 +8,7 @@ const useStyles = makeStyles(theme => ({
     marginTop: 18
   },
   header: {
-    fontWeight: 600,
+    fontSize: 17,
     backgroundColor: '#c8e2f4',
     marginTop: 18,
     padding: 10
