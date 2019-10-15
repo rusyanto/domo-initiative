@@ -6,6 +6,15 @@ import WorkTabs from '../WorkTabs';
 
 const theme = createMuiTheme({
   overrides: {
+    MuiButton: {
+      contained: {
+        backgroundColor: '#fc8f13',
+        color: 'white',
+        '&:hover': {
+          backgroundColor: '#ed8003',
+        }
+      },
+    },
     MuiInputLabel: {
       root: {
         '&$focused': {

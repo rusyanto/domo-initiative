@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
@@ -12,6 +13,9 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: '#c8e2f4',
     marginTop: 18,
     padding: 10
+  },
+  btnBottom: {
+    marginTop: 18
   }
 }));
 
@@ -137,6 +141,9 @@ function TabPanel0() {
             fullWidth
             margin="normal"
           />
+          <Button variant="contained" className={classes.btnBottom}>
+            Save
+          </Button>
         </Grid>
       </Grid>
     </form>
