@@ -29,5 +29,11 @@
   },
   "fullpage": true,
   "mapping": [],
+  "collections": [
+    {
+      "name": "Worksheet"
+    }
+  ],
+  "proxyId": "9c7713ea-c3d6-4607-bc92-281fc97722b0",
   "id": "d7ac3bc2-6e7f-4602-94d1-cdd2e66d89b3"
 }

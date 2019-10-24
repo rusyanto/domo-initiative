@@ -19,9 +19,10 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function TabPanel0() {
+function TabPanel0(props) {
   const classes = useStyles();
 
+  const { data } = props;
   const [values, setValues] = React.useState({
     svaId: '',
     initiativeName: '',
