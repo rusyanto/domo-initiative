@@ -83,7 +83,7 @@
     ]
   },
   "devDependencies": {
-    "@domoinc/ryuu-proxy": "^3.0.3"
+    "@domoinc/ryuu-proxy": "^4.0.0"
   },
   "jest": {
     "roots": [
