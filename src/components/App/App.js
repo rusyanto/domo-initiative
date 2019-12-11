@@ -2,37 +2,21 @@ import React from 'react';
 import './App.css';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
-import WorkTabs from '../WorkTabs';
+import Home from '../Home';
 
 const theme = createMuiTheme({
-  overrides: {
-    MuiButton: {
-      contained: {
-        backgroundColor: '#fc8f13',
-        color: 'white',
-        '&:hover': {
-          backgroundColor: '#ed8003',
-        }
-      },
-    },
-    MuiInputLabel: {
-      root: {
-        '&$focused': {
-          color: '#4e8cba'
-        }
-      }
-    },
-    MuiInput: {
-      underline: {
-        '&:after': {
-          borderBottomColor: '#4e8cba'
-        }
-      }
-    }
-  },
   palette: {
-    background: {
-      gray: '#555',
+    primary: {
+      light: "#ccffff",
+      main: "#99ccee",
+      dark: "#689bbb",
+      contrastText: "#fff"
+    },
+    secondary: {
+      light: "#ffc04d",
+      main: "#fc8f13",
+      dark: "#c36000",
+      contrastText: "#fff"
     },
     text: {
       primary: 'rgba(0, 0, 0, 0.8)',
@@ -44,7 +28,7 @@ const theme = createMuiTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <WorkTabs />
+      <Home />
     </ThemeProvider>
   );
 }
