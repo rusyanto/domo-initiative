@@ -1,8 +1,11 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 
 function Workbook() {
+  let { id } = useParams();
+
   return (
-    <div>Workbook</div>
+    <div>Workbook {id}</div>
   );
 }
 

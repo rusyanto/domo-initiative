@@ -46,8 +46,18 @@ function Home() {
       { title: 'Updated Date', field: 'updatedDate', type: 'date' },
     ],
     data: [
-      { name: 'RMIT - Finance Dashboards', createdBy: 'Mehmet Baran', updatedDate: new Date('2019-12-13') },
-      { name: 'Programmatic Media Optimisation Dashboard', createdBy: 'Zerya Betül Baran', updatedDate: new Date('2019-12-11') },
+      {
+        id: 'b3ea3d2d-86c5-44e6-a2f4-985136bbbce1',
+        name: 'RMIT - Finance Dashboards',
+        createdBy: 'Mehmet Baran',
+        updatedDate: new Date('2019-12-13')
+      },
+      {
+        id: '1e61d99d-9885-419a-a33e-3be3941ee720',
+        name: 'Programmatic Media Optimisation Dashboard',
+        createdBy: 'Zerya Betül Baran',
+        updatedDate: new Date('2019-12-11')
+      },
     ],
   });
 
@@ -60,17 +70,6 @@ function Home() {
       columns={state.columns}
       data={state.data}
       editable={{
-        onRowAdd: newData =>
-          new Promise(resolve => {
-            setTimeout(() => {
-              resolve();
-              setState(prevState => {
-                const data = [...prevState.data];
-                data.push(newData);
-                return { ...prevState, data };
-              });
-            }, 600);
-          }),
         onRowDelete: oldData =>
           new Promise(resolve => {
             setTimeout(() => {
@@ -85,9 +84,15 @@ function Home() {
       }}
       actions={[
         {
+          icon: tableIcons.Add,
+          tooltip: 'Add New',
+          isFreeAction: true,
+          onClick: (event) => history.push("/workbook/new")
+        },
+        {
           icon: tableIcons.Edit,
           tooltip: 'Edit',
-          onClick: (event, rowData) => history.push("/workbook")
+          onClick: (event, rowData) => history.push("/workbook/" + rowData.id)
         }
       ]}
     />
