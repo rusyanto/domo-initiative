@@ -2,7 +2,9 @@ import React from 'react';
 import './App.css';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
+import { Route, HashRouter } from 'react-router-dom';
 import Home from '../Home';
+import Workbook from '../Workbook';
 
 const theme = createMuiTheme({
   palette: {
@@ -28,7 +30,10 @@ const theme = createMuiTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <Home />
+      <HashRouter>
+        <Route exact path="/" component={Home} />
+        <Route path="/workbook" component={Workbook} />
+      </HashRouter>
     </ThemeProvider>
   );
 }

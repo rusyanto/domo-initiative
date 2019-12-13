@@ -1,4 +1,5 @@
 import React, { forwardRef } from 'react';
+import { useHistory } from 'react-router-dom';
 import MaterialTable from 'material-table';
 // Material table icons
 import AddBox from '@material-ui/icons/AddBox';
@@ -41,29 +42,21 @@ function Home() {
   const [state, setState] = React.useState({
     columns: [
       { title: 'Name', field: 'name' },
-      { title: 'Surname', field: 'surname' },
-      { title: 'Birth Year', field: 'birthYear', type: 'numeric' },
-      {
-        title: 'Birth Place',
-        field: 'birthCity',
-        lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' },
-      },
+      { title: 'Created By', field: 'createdBy' },
+      { title: 'Updated Date', field: 'updatedDate', type: 'date' },
     ],
     data: [
-      { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 },
-      {
-        name: 'Zerya Betül',
-        surname: 'Baran',
-        birthYear: 2017,
-        birthCity: 34,
-      },
+      { name: 'RMIT - Finance Dashboards', createdBy: 'Mehmet Baran', updatedDate: new Date('2019-12-13') },
+      { name: 'Programmatic Media Optimisation Dashboard', createdBy: 'Zerya Betül Baran', updatedDate: new Date('2019-12-11') },
     ],
   });
+
+  let history = useHistory();
 
   return (
     <MaterialTable
       icons={tableIcons}
-      title="Editable Example"
+      title="Initiative Workbooks"
       columns={state.columns}
       data={state.data}
       editable={{
@@ -78,19 +71,6 @@ function Home() {
               });
             }, 600);
           }),
-        onRowUpdate: (newData, oldData) =>
-          new Promise(resolve => {
-            setTimeout(() => {
-              resolve();
-              if (oldData) {
-                setState(prevState => {
-                  const data = [...prevState.data];
-                  data[data.indexOf(oldData)] = newData;
-                  return { ...prevState, data };
-                });
-              }
-            }, 600);
-          }),
         onRowDelete: oldData =>
           new Promise(resolve => {
             setTimeout(() => {
@@ -103,6 +83,13 @@ function Home() {
             }, 600);
           }),
       }}
+      actions={[
+        {
+          icon: tableIcons.Edit,
+          tooltip: 'Edit',
+          onClick: (event, rowData) => history.push("/workbook")
+        }
+      ]}
     />
   );
 }
