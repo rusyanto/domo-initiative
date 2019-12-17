@@ -5,9 +5,10 @@ import Button from '@material-ui/core/Button';
 import SaveIcon from '@material-ui/icons/Save';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import Grid from '@material-ui/core/Grid';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import TabPanel from '../TabPanel';
-import { Grid } from '@material-ui/core';
+import InitiativeObjtv from '../InitiativeObjtv';
 
 function a11yProps(index) {
   return {
@@ -22,6 +23,7 @@ const useStyles = makeStyles(theme => ({
   },
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,
+    marginTop: 16,
   },
   tabLabel: {
     textTransform: 'none',
@@ -69,7 +71,7 @@ function Workbook() {
           <Tab label="Metric Mapping" {...a11yProps(3)} className={classes.tabLabel} />
         </Tabs>
         <TabPanel value={value} index={0}>
-          Initiative Objective
+          <InitiativeObjtv />
         </TabPanel>
         <TabPanel value={value} index={1}>
           Business Questions & Metrics
