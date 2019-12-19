@@ -23,7 +23,10 @@ const theme = createMuiTheme({
     text: {
       primary: 'rgba(0, 0, 0, 0.8)',
       secondary: 'rgba(0, 0, 0, 0.4)'
-    }
+    },
+  },
+  form: {
+    padding: '0 6px',
   }
 });
 

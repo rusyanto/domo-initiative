@@ -9,6 +9,9 @@ import Grid from '@material-ui/core/Grid';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import TabPanel from '../TabPanel';
 import InitiativeObjtv from '../InitiativeObjtv';
+import BusinessQns from '../BusinessQns';
+import Wireframe from '../Wireframe';
+import MetricMap from '../MetricMap';
 
 function a11yProps(index) {
   return {
@@ -74,20 +77,20 @@ function Workbook() {
           <InitiativeObjtv />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          Business Questions & Metrics
+          <BusinessQns />
         </TabPanel>
         <TabPanel value={value} index={2}>
-          Wireframe
+          <Wireframe />
         </TabPanel>
         <TabPanel value={value} index={3}>
-          Metric Mapping
+          <MetricMap />
         </TabPanel>
       </Grid>
       <Grid item xs={12} className={classes.buttons}>
         <Button href="/">
           <NavigateBeforeIcon className={classes.button} />Back
         </Button>
-        <Button>
+        <Button variant="contained" color="secondary">
           <SaveIcon className={classes.button} />Save
         </Button>
       </Grid>
