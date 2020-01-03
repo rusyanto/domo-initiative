@@ -2,6 +2,9 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { SET_WORKBOOK_VALUE } from '../../redux/actionTypes';
 
 const useStyles = makeStyles(theme => ({
   multiline: {
@@ -22,21 +25,18 @@ const useStyles = makeStyles(theme => ({
 
 function InitiativeObjtv() {
   const classes = useStyles();
-  const [values, setValues] = React.useState({
-    initiativeName: '',
-    businessUnit: '',
-    initiativeOwner: '',
-    businessObjective: '',
-    audience: '',
 
-    bvWeWill: '',
-    bvImprove: '',
-    bvMeasure: '',
-    bvResult: ''
-  });
+  const values = useSelector(state => state.workbook);
+  const dispatch = useDispatch();
 
   const handleChange = name => event => {
-    setValues({ ...values, [name]: event.target.value });
+    dispatch({
+      type: SET_WORKBOOK_VALUE,
+      payload: {
+        name: name,
+        value: event.target.value
+      }
+    });
   };
 
   return (
