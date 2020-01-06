@@ -1,6 +1,9 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
+import AddBoxIcon from '@material-ui/icons/AddBox';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSelector, useDispatch } from 'react-redux';
 import { SET_WORKBOOK_VALUE } from '../../redux/actionTypes';
@@ -9,13 +12,21 @@ const useStyles = makeStyles(theme => ({
   multiline: {
     marginTop: 18
   },
-  header: {
+  headerBv: {
     fontSize: 17,
     color: theme.palette.primary.contrastText,
     backgroundColor: theme.palette.primary.main,
     margin: '0 0 0 -24px',
     padding: '10px 10px 10px 20px',
     maxWidth: 'none'
+  },
+  headerTeam: {
+    fontSize: 17,
+    color: theme.palette.primary.contrastText,
+    backgroundColor: theme.palette.primary.main,
+    margin: '0 0 0 -24px',
+    padding: '0 10px 0 20px',
+    width: 'auto'
   },
   btnBottom: {
     marginTop: 18
@@ -107,7 +118,7 @@ function InitiativeObjtv() {
       </Grid>
       <Grid container spacing={8}>
         <Grid item xs={7}>
-          <Grid className={classes.header} item xs={12}>
+          <Grid className={classes.headerBv} item xs={12}>
             Business Value Statement
           </Grid>
           <TextField
@@ -164,6 +175,54 @@ function InitiativeObjtv() {
             style={{ marginTop: 61 }}
             inputProps={{style: {height: 387}}}
           />
+        </Grid>
+      </Grid>
+      <Grid container spacing={8}>
+        <Grid item xs={7}>
+          <Grid container className={classes.headerTeam} alignItems="baseline">
+            <Grid item xs={6}>
+              Initiative Team
+            </Grid>
+            <Grid item xs={6} style={{ textAlign: 'right' }}>
+              <IconButton style={{ color: '#fff' }} aria-label="add team member">
+                <AddBoxIcon />
+              </IconButton>
+            </Grid>
+          </Grid>
+          <Grid container spacing={3} alignItems="flex-end">
+            <Grid item xs={3}>
+              <TextField
+                id="standard-team-name"
+                label="Name"
+                fullWidth
+                margin="normal"
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <TextField
+                id="standard-team-role"
+                label="Role"
+                fullWidth
+                margin="normal"
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <TextField
+                id="standard-team-domo-role"
+                label="Core Domo Role"
+                fullWidth
+                margin="normal"
+              />
+            </Grid>
+            <Grid item xs={1} style={{ textAlign: 'center' }}>
+              <IconButton aria-label="delete team member">
+                <DeleteOutlinedIcon />
+              </IconButton>
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid item xs={5}>
+
         </Grid>
       </Grid>
     </form>

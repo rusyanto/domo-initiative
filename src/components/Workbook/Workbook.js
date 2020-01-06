@@ -36,7 +36,7 @@ const useStyles = makeStyles(theme => ({
     '& > *': {
       marginTop: theme.spacing(1),
       marginLeft: theme.spacing(3),
-      marginRight: theme.spacing(8),
+      marginRight: theme.spacing(3),
     },
     textAlign: 'right',
   },

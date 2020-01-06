@@ -11,7 +11,8 @@ const initialState = {
   bvImprove: '',
   bvMeasure: '',
   bvResult: '',
-  mvp:''
+  mvp:'',
+  teams: []
 };
 
 export default function(state = initialState, action) {
