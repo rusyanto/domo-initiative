@@ -2,8 +2,7 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { SET_WORKBOOK_VALUE } from '../../redux/actionTypes';
 
 const useStyles = makeStyles(theme => ({
@@ -14,7 +13,7 @@ const useStyles = makeStyles(theme => ({
     fontSize: 17,
     color: theme.palette.primary.contrastText,
     backgroundColor: theme.palette.primary.main,
-    margin: '18px 0 0 -30px',
+    margin: '0 0 0 -24px',
     padding: '10px 10px 10px 20px',
     maxWidth: 'none'
   },
@@ -40,8 +39,8 @@ function InitiativeObjtv() {
   };
 
   return (
-    <form noValidate autoComplete="off" style={{ padding: '0 6px' }}>
-      <Grid container>
+    <form noValidate autoComplete="off">
+      <Grid container spacing={8}>
         <Grid item xs={7}>
           <TextField
             id="standard-initiative-name"
@@ -67,6 +66,10 @@ function InitiativeObjtv() {
             fullWidth
             margin="normal"
           />
+        </Grid>
+      </Grid>
+      <Grid container spacing={8}>
+        <Grid item xs={7}>
           <TextField
             id="standard-business-objective"
             label="Define Business Objective"
@@ -87,6 +90,23 @@ function InitiativeObjtv() {
             fullWidth
             margin="normal"
           />
+        </Grid>
+        <Grid item xs={5}>
+          <TextField
+            id="standard-current-state"
+            label="Define the current state / problem"
+            multiline
+            rows="11"
+            value={values.currentState}
+            onChange={handleChange('currentState')}
+            fullWidth
+            margin="normal"
+            inputProps={{style: {height: 222}}}
+          />
+        </Grid>
+      </Grid>
+      <Grid container spacing={8}>
+        <Grid item xs={7}>
           <Grid className={classes.header} item xs={12}>
             Business Value Statement
           </Grid>
@@ -129,6 +149,20 @@ function InitiativeObjtv() {
             onChange={handleChange('bvResult')}
             fullWidth
             margin="normal"
+          />
+        </Grid>
+        <Grid item xs={5}>
+          <TextField
+            id="standard-mvp"
+            label="Minimum Viable Product"
+            multiline
+            rows="10"
+            values={values.mvp}
+            onChange={handleChange('mvp')}
+            fullWidth
+            margin="normal"
+            style={{ marginTop: 61 }}
+            inputProps={{style: {height: 387}}}
           />
         </Grid>
       </Grid>

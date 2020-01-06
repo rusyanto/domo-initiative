@@ -6,11 +6,12 @@ const initialState = {
   initiativeOwner: '',
   businessObjective: '',
   audience: '',
-
+  currentState: '',
   bvWeWill: '',
   bvImprove: '',
   bvMeasure: '',
-  bvResult: ''
+  bvResult: '',
+  mvp:''
 };
 
 export default function(state = initialState, action) {

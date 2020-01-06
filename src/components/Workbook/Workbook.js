@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import SaveIcon from '@material-ui/icons/Save';
@@ -35,7 +36,7 @@ const useStyles = makeStyles(theme => ({
     '& > *': {
       marginTop: theme.spacing(1),
       marginLeft: theme.spacing(3),
-      marginRight: theme.spacing(3),
+      marginRight: theme.spacing(8),
     },
     textAlign: 'right',
   },
@@ -48,9 +49,14 @@ function Workbook() {
   let { id } = useParams();
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+  const wbValues = useSelector(state => state.workbook);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+  };
+
+  const handleSave = event => {
+    console.log(wbValues);
   };
 
   useEffect(() => {
@@ -90,7 +96,7 @@ function Workbook() {
         <Button href="/">
           <NavigateBeforeIcon className={classes.button} />Back
         </Button>
-        <Button variant="contained" color="secondary">
+        <Button variant="contained" color="secondary" onClick={handleSave}>
           <SaveIcon className={classes.button} />Save
         </Button>
       </Grid>
