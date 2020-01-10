@@ -6,7 +6,7 @@ import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSelector, useDispatch } from 'react-redux';
-import { SET_WORKBOOK_VALUE } from '../../redux/actionTypes';
+import { SET_WORKBOOK_VALUE, ADD_TEAM_MEMBER } from '../../redux/actionTypes';
 
 const useStyles = makeStyles(theme => ({
   multiline: {
@@ -46,6 +46,53 @@ function InitiativeObjtv() {
         name: name,
         value: event.target.value
       }
+    });
+  };
+
+  const teamMembers = [];
+  for (let i = 0; i < values.team.length; i++) {
+    let teamMember = values.team[i];
+    teamMembers.push(
+      <Grid key={i} container spacing={3} alignItems="flex-end">
+        <Grid item xs={3}>
+          <TextField
+            id="standard-team-name"
+            label="Name"
+            fullWidth
+            margin="normal"
+            value={teamMember.name}
+          />
+        </Grid>
+        <Grid item xs={4}>
+          <TextField
+            id="standard-team-role"
+            label="Role"
+            fullWidth
+            margin="normal"
+            value={teamMember.role}
+          />
+        </Grid>
+        <Grid item xs={4}>
+          <TextField
+            id="standard-team-domo-role"
+            label="Core Domo Role"
+            fullWidth
+            margin="normal"
+            value={teamMember.domoRole}
+          />
+        </Grid>
+        <Grid item xs={1} style={{ textAlign: 'center' }}>
+          <IconButton aria-label="delete team member">
+            <DeleteOutlinedIcon />
+          </IconButton>
+        </Grid>
+      </Grid>
+    );
+  }
+
+  const addTeam = () => {
+    dispatch({
+      type: ADD_TEAM_MEMBER
     });
   };
 
@@ -184,42 +231,12 @@ function InitiativeObjtv() {
               Initiative Team
             </Grid>
             <Grid item xs={6} style={{ textAlign: 'right' }}>
-              <IconButton style={{ color: '#fff' }} aria-label="add team member">
+              <IconButton style={{ color: '#fff' }} aria-label="add team member" onClick={addTeam}>
                 <AddBoxIcon />
               </IconButton>
             </Grid>
           </Grid>
-          <Grid container spacing={3} alignItems="flex-end">
-            <Grid item xs={3}>
-              <TextField
-                id="standard-team-name"
-                label="Name"
-                fullWidth
-                margin="normal"
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <TextField
-                id="standard-team-role"
-                label="Role"
-                fullWidth
-                margin="normal"
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <TextField
-                id="standard-team-domo-role"
-                label="Core Domo Role"
-                fullWidth
-                margin="normal"
-              />
-            </Grid>
-            <Grid item xs={1} style={{ textAlign: 'center' }}>
-              <IconButton aria-label="delete team member">
-                <DeleteOutlinedIcon />
-              </IconButton>
-            </Grid>
-          </Grid>
+          {teamMembers}
         </Grid>
         <Grid item xs={5}>
 
