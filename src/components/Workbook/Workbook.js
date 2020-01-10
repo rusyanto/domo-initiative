@@ -49,7 +49,7 @@ function Workbook() {
   let { id } = useParams();
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-  const wbValues = useSelector(state => state.workbook);
+  const wbValues = useSelector(state => state);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

@@ -6,7 +6,7 @@ import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSelector, useDispatch } from 'react-redux';
-import { SET_WORKBOOK_VALUE, ADD_TEAM_MEMBER } from '../../redux/actionTypes';
+import { SET_WORKBOOK_VALUE, ADD_TEAM_MEMBER, EDIT_TEAM_MEMBER } from '../../redux/actionTypes';
 
 const useStyles = makeStyles(theme => ({
   multiline: {
@@ -35,9 +35,9 @@ const useStyles = makeStyles(theme => ({
 
 function InitiativeObjtv() {
   const classes = useStyles();
-
-  const values = useSelector(state => state.workbook);
   const dispatch = useDispatch();
+  const workbook = useSelector(state => state.workbook);
+  const team = useSelector(state => state.team);
 
   const handleChange = name => event => {
     dispatch({
@@ -49,36 +49,59 @@ function InitiativeObjtv() {
     });
   };
 
+  const addTeam = () => {
+    dispatch({
+      type: ADD_TEAM_MEMBER
+    });
+  };
+
+  const editTeam = id => event => {
+    dispatch({
+      type: EDIT_TEAM_MEMBER,
+      payload: {
+        id: id,
+        name: event.target.name,
+        value: event.target.value
+      }
+    });
+  };
+
   const teamMembers = [];
-  for (let i = 0; i < values.team.length; i++) {
-    let teamMember = values.team[i];
+  for (let i = 0; i < team.length; i++) {
+    let teamMember = team[i];
     teamMembers.push(
       <Grid key={i} container spacing={3} alignItems="flex-end">
         <Grid item xs={3}>
           <TextField
             id="standard-team-name"
             label="Name"
+            name="name"
             fullWidth
             margin="normal"
             value={teamMember.name}
+            onChange={editTeam(teamMember.id)}
           />
         </Grid>
         <Grid item xs={4}>
           <TextField
             id="standard-team-role"
             label="Role"
+            name="role"
             fullWidth
             margin="normal"
             value={teamMember.role}
+            onChange={editTeam(teamMember.id)}
           />
         </Grid>
         <Grid item xs={4}>
           <TextField
             id="standard-team-domo-role"
             label="Core Domo Role"
+            name="domoRole"
             fullWidth
             margin="normal"
             value={teamMember.domoRole}
+            onChange={editTeam(teamMember.id)}
           />
         </Grid>
         <Grid item xs={1} style={{ textAlign: 'center' }}>
@@ -90,12 +113,6 @@ function InitiativeObjtv() {
     );
   }
 
-  const addTeam = () => {
-    dispatch({
-      type: ADD_TEAM_MEMBER
-    });
-  };
-
   return (
     <form noValidate autoComplete="off">
       <Grid container spacing={8}>
@@ -103,7 +120,7 @@ function InitiativeObjtv() {
           <TextField
             id="standard-initiative-name"
             label="Initiative Name"
-            value={values.initiativeName}
+            value={workbook.initiativeName}
             onChange={handleChange('initiativeName')}
             fullWidth
             margin="normal"
@@ -111,7 +128,7 @@ function InitiativeObjtv() {
           <TextField
             id="standard-business-unit"
             label="Business Unit"
-            value={values.businessUnit}
+            value={workbook.businessUnit}
             onChange={handleChange('businessUnit')}
             fullWidth
             margin="normal"
@@ -119,7 +136,7 @@ function InitiativeObjtv() {
           <TextField
             id="standard-initiative-owner"
             label="Initiative Owner"
-            value={values.initiativeOwner}
+            value={workbook.initiativeOwner}
             onChange={handleChange('initiativeOwner')}
             fullWidth
             margin="normal"
@@ -133,7 +150,7 @@ function InitiativeObjtv() {
             label="Define Business Objective"
             multiline
             rows="6"
-            value={values.businessObjective}
+            value={workbook.businessObjective}
             onChange={handleChange('businessObjective')}
             fullWidth
             margin="normal"
@@ -143,7 +160,7 @@ function InitiativeObjtv() {
             label="Define the Audience"
             multiline
             rows="3"
-            value={values.audience}
+            value={workbook.audience}
             onChange={handleChange('audience')}
             fullWidth
             margin="normal"
@@ -155,7 +172,7 @@ function InitiativeObjtv() {
             label="Define the current state / problem"
             multiline
             rows="11"
-            value={values.currentState}
+            value={workbook.currentState}
             onChange={handleChange('currentState')}
             fullWidth
             margin="normal"
@@ -173,7 +190,7 @@ function InitiativeObjtv() {
             label="We Will"
             multiline
             rows="3"
-            value={values.bvWeWill}
+            value={workbook.bvWeWill}
             onChange={handleChange('bvWeWill')}
             fullWidth
             margin="normal"
@@ -183,7 +200,7 @@ function InitiativeObjtv() {
             label="To Improve"
             multiline
             rows="3"
-            value={values.bvImprovel}
+            value={workbook.bvImprovel}
             onChange={handleChange('bvImprove')}
             fullWidth
             margin="normal"
@@ -193,7 +210,7 @@ function InitiativeObjtv() {
             label="As Measured By"
             multiline
             rows="3"
-            value={values.bvMeasure}
+            value={workbook.bvMeasure}
             onChange={handleChange('bvMeasure')}
             fullWidth
             margin="normal"
@@ -203,7 +220,7 @@ function InitiativeObjtv() {
             label="Resulting In"
             multiline
             rows="3"
-            value={values.bvResult}
+            value={workbook.bvResult}
             onChange={handleChange('bvResult')}
             fullWidth
             margin="normal"
@@ -215,7 +232,7 @@ function InitiativeObjtv() {
             label="Minimum Viable Product"
             multiline
             rows="10"
-            values={values.mvp}
+            workbook={workbook.mvp}
             onChange={handleChange('mvp')}
             fullWidth
             margin="normal"
