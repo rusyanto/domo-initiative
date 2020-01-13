@@ -11,7 +11,8 @@ const initialState = {
   bvImprove: '',
   bvMeasure: '',
   bvResult: '',
-  mvp:''
+  mvp:'',
+  successCriteria: ''
 };
 
 export default function workbook (state = initialState, action) {

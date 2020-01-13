@@ -1,4 +1,4 @@
-import { ADD_TEAM_MEMBER, EDIT_TEAM_MEMBER } from '../actionTypes';
+import { ADD_TEAM_MEMBER, EDIT_TEAM_MEMBER, DELETE_TEAM_MEMBER } from '../actionTypes';
 
 const initialState = [];
 
@@ -9,11 +9,11 @@ export default function team (state = initialState, action) {
         id: state.length,
         name: '',
         role: '',
-        domoRole: '' 
+        domoRole: ''
       }];
     }
 
-    case EDIT_TEAM_MEMBER:{
+    case EDIT_TEAM_MEMBER: {
       const { id, name, value } = action.payload;
       return state.map((member, index) => {
         if (member.id !== id) {
@@ -27,6 +27,11 @@ export default function team (state = initialState, action) {
           [name]: value
         }
       });
+    }
+
+    case DELETE_TEAM_MEMBER: {
+      const { id } = action.payload;
+      return state.filter((member, index) => member.id !== id);
     }
 
     default:

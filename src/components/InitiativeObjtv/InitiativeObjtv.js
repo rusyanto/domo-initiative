@@ -6,7 +6,7 @@ import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSelector, useDispatch } from 'react-redux';
-import { SET_WORKBOOK_VALUE, ADD_TEAM_MEMBER, EDIT_TEAM_MEMBER } from '../../redux/actionTypes';
+import { SET_WORKBOOK_VALUE, ADD_TEAM_MEMBER, EDIT_TEAM_MEMBER, DELETE_TEAM_MEMBER } from '../../redux/actionTypes';
 
 const useStyles = makeStyles(theme => ({
   multiline: {
@@ -66,6 +66,15 @@ function InitiativeObjtv() {
     });
   };
 
+  const deleteTeam = id => event => {
+    dispatch({
+      type: DELETE_TEAM_MEMBER,
+      payload: {
+        id: id
+      }
+    });
+  };
+
   const teamMembers = [];
   for (let i = 0; i < team.length; i++) {
     let teamMember = team[i];
@@ -105,7 +114,7 @@ function InitiativeObjtv() {
           />
         </Grid>
         <Grid item xs={1} style={{ textAlign: 'center' }}>
-          <IconButton aria-label="delete team member">
+          <IconButton aria-label="delete team member" onClick={deleteTeam(teamMember.id)}>
             <DeleteOutlinedIcon />
           </IconButton>
         </Grid>
@@ -231,7 +240,7 @@ function InitiativeObjtv() {
             id="standard-mvp"
             label="Minimum Viable Product"
             multiline
-            rows="10"
+            rows="20"
             workbook={workbook.mvp}
             onChange={handleChange('mvp')}
             fullWidth
@@ -256,7 +265,17 @@ function InitiativeObjtv() {
           {teamMembers}
         </Grid>
         <Grid item xs={5}>
-
+          <TextField
+            id="standard-success-criteria"
+            label="Success Criteria"
+            multiline
+            rows="11"
+            workbook={workbook.successCriteria}
+            onChange={handleChange('successCriteria')}
+            fullWidth
+            margin="normal"
+            style={{ marginTop: 61 }}
+          />
         </Grid>
       </Grid>
     </form>
