@@ -6,7 +6,7 @@ export default function team (state = initialState, action) {
   switch (action.type) {
     case ADD_TEAM_MEMBER: {
       return [ ...state, {
-        id: state.length,
+        id: state.reduce((max, p) => p.id > max ? p.id : max, 0) + 1,
         name: '',
         role: '',
         domoRole: ''
