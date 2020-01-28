@@ -90,7 +90,7 @@ function BusinessQns() {
   };
 
   return (
-    <form noValidate autoComplete="off" style={{ padding: '0 6px' }}>
+    <form noValidate autoComplete="off">
       <Grid container>
         <Grid item xs={12}>
           <AddButton onClick={addQuestion} />

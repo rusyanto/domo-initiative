@@ -62,11 +62,27 @@ export default function question (state = initialState, action) {
             xAxis: '',
             yAxis: '',
             zAxis: '',
-            goal: '',
+            goalValue: '',
             series: '',
-            calc: '',
             summary: '',
-            filters: ''
+            cardFilters: '',
+            cardOwner: '',
+            measure: '',
+            rawCalc: '',
+            input: '',
+            dimensionInt: '',
+            dimensionExt: '',
+            goalField: '',
+            datasetFilter: '',
+            history: '',
+            calc: '',
+            calcNew: '',
+            dataSourceName: '',
+            dataSourceConn: '',
+            dataOwner: '',
+            schedule: '',
+            cleanup: '',
+            joinCriteria: ''
           }]
         }
       });

@@ -12,3 +12,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.margin-top {
+  margin-top: 16px;
+}
+
+.ind-card {
+  margin: 10px;
+}
+
+.input-pad {
+  padding: 0 8px;
+}

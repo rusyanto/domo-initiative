@@ -9,9 +9,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { SET_WORKBOOK_VALUE, ADD_TEAM_MEMBER, EDIT_TEAM_MEMBER, DELETE_TEAM_MEMBER } from '../../redux/actionTypes';
 
 const useStyles = makeStyles(theme => ({
-  multiline: {
-    marginTop: 18
-  },
   headerBv: {
     fontSize: 17,
     color: theme.palette.primary.contrastText,
@@ -27,9 +24,6 @@ const useStyles = makeStyles(theme => ({
     margin: '0 0 0 -24px',
     padding: '0 10px 0 20px',
     width: 'auto'
-  },
-  btnBottom: {
-    marginTop: 18
   }
 }));
 

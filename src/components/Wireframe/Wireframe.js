@@ -1,6 +1,5 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -10,18 +9,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { EDIT_CARD } from '../../redux/actionTypes';
 
-const useStyles = makeStyles(theme => ({
-  indCard: {
-    margin: 10
-  },
-  input: {
-    paddingLeft: theme.spacing(1),
-    paddingRight: theme.spacing(1)
-  }
-}));
-
 function Wireframe() {
-  const classes = useStyles();
   const dispatch = useDispatch();
   const questions = useSelector(state => state.question);
   const inputLabel = React.useRef(null);
@@ -39,10 +27,10 @@ function Wireframe() {
   };
 
   return (
-    <form noValidate autoComplete="off" style={{ padding: '0 6px' }}>
+    <form noValidate autoComplete="off">
       {questions.map((question, i) => {
         return (
-          <div key={i} style={{ marginTop: 16 }}>
+          <div key={i} className="margin-top">
             <Typography variant="caption" color="textSecondary">
               Business Question
             </Typography>
@@ -51,7 +39,7 @@ function Wireframe() {
             </Typography>
             {question.cards.map((card, j) => {
               return (
-                <div key={j} className={classes.indCard}>
+                <div key={j} className="ind-card">
                   <Typography variant="caption" color="textSecondary">
                     Card Name
                   </Typography>
@@ -59,7 +47,7 @@ function Wireframe() {
                     {card.name}
                   </Typography>
                   <Grid container>
-                    <Grid item xs={3} className={classes.input}>
+                    <Grid item xs={3} className="input-pad">
                       <FormControl fullWidth style={{ marginTop: 16 }}>
                         <InputLabel ref={inputLabel} htmlFor={"standard-card-prisec-" + i + "-" + j}>
                           Primary / Secondary
@@ -77,7 +65,7 @@ function Wireframe() {
                         </Select>
                       </FormControl>
                     </Grid>
-                    <Grid item xs={3} className={classes.input}>
+                    <Grid item xs={3} className="input-pad">
                       <TextField
                         id={"standard-card-chart-type-" + i + "-" + j}
                         label="Chart Type"
@@ -88,7 +76,7 @@ function Wireframe() {
                         margin="normal"
                       />
                     </Grid>
-                    <Grid item xs={3} className={classes.input}>
+                    <Grid item xs={3} className="input-pad">
                       <TextField
                         id={"standard-card-date-range-" + i + "-" + j}
                         label="Date Range"
@@ -99,7 +87,7 @@ function Wireframe() {
                         margin="normal"
                       />
                     </Grid>
-                    <Grid item xs={3} className={classes.input}>
+                    <Grid item xs={3} className="input-pad">
                       <TextField
                         id={"standard-card-date-grain-" + i + "-" + j}
                         label="Date Grain"
@@ -110,7 +98,7 @@ function Wireframe() {
                         margin="normal"
                       />
                     </Grid>
-                    <Grid item xs={3} className={classes.input}>
+                    <Grid item xs={3} className="input-pad">
                       <TextField
                         id={"standard-card-x-axis-" + i + "-" + j}
                         label="X-Axis (Dimension)"
@@ -121,7 +109,7 @@ function Wireframe() {
                         margin="normal"
                       />
                     </Grid>
-                    <Grid item xs={3} className={classes.input}>
+                    <Grid item xs={3} className="input-pad">
                       <TextField
                         id={"standard-card-y-axis-" + i + "-" + j}
                         label="Y-Axis (Value A)"
@@ -132,7 +120,7 @@ function Wireframe() {
                         margin="normal"
                       />
                     </Grid>
-                    <Grid item xs={3} className={classes.input}>
+                    <Grid item xs={3} className="input-pad">
                       <TextField
                         id={"standard-card-z-axis-" + i + "-" + j}
                         label="Z-Axis (Value B)"
@@ -143,18 +131,18 @@ function Wireframe() {
                         margin="normal"
                       />
                     </Grid>
-                    <Grid item xs={3} className={classes.input}>
+                    <Grid item xs={3} className="input-pad">
                       <TextField
-                        id={"standard-card-goal-" + i + "-" + j}
+                        id={"standard-card-goal-value-" + i + "-" + j}
                         label="Goal / Target Value"
-                        name="goal"
-                        value={card.goal}
+                        name="goalValue"
+                        value={card.goalValue}
                         onChange={editCard(question.id, card.id)}
                         fullWidth
                         margin="normal"
                       />
                     </Grid>
-                    <Grid item xs={3} className={classes.input}>
+                    <Grid item xs={3} className="input-pad">
                       <TextField
                         id={"standard-card-series-" + i + "-" + j}
                         label="Series"
@@ -165,18 +153,7 @@ function Wireframe() {
                         margin="normal"
                       />
                     </Grid>
-                    <Grid item xs={3} className={classes.input}>
-                      <TextField
-                        id={"standard-card-calc-" + i + "-" + j}
-                        label="Calculation"
-                        name="calc"
-                        value={card.calc}
-                        onChange={editCard(question.id, card.id)}
-                        fullWidth
-                        margin="normal"
-                      />
-                    </Grid>
-                    <Grid item xs={3} className={classes.input}>
+                    <Grid item xs={3} className="input-pad">
                       <TextField
                         id={"standard-card-summary-" + i + "-" + j}
                         label="Summary Number"
@@ -187,12 +164,12 @@ function Wireframe() {
                         margin="normal"
                       />
                     </Grid>
-                    <Grid item xs={3} className={classes.input}>
+                    <Grid item xs={3} className="input-pad">
                       <TextField
                         id={"standard-card-filters-" + i + "-" + j}
                         label="Card Specific Filters"
-                        name="filters"
-                        value={card.filters}
+                        name="cardFilters"
+                        value={card.cardFilters}
                         onChange={editCard(question.id, card.id)}
                         fullWidth
                         margin="normal"
