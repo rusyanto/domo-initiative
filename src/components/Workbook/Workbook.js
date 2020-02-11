@@ -1,18 +1,29 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import domo from 'ryuu.js';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import SaveIcon from '@material-ui/icons/Save';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Grid from '@material-ui/core/Grid';
+import Snackbar from '@material-ui/core/Snackbar';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Box from '@material-ui/core/Box';
+import MuiAlert from '@material-ui/lab/Alert';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import TabPanel from '../TabPanel';
 import InitiativeObjtv from '../InitiativeObjtv';
 import BusinessQns from '../BusinessQns';
 import Wireframe from '../Wireframe';
 import MetricMap from '../MetricMap';
+
+const wbCollection = 'Workbooks';
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 function a11yProps(index) {
   return {
@@ -38,7 +49,10 @@ const useStyles = makeStyles(theme => ({
       marginLeft: theme.spacing(3),
       marginRight: theme.spacing(3),
     },
-    textAlign: 'right',
+    display: 'flex',
+    verticalAlign: 'top',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-end'
   },
   button: {
     paddingRight: 8,
@@ -48,7 +62,12 @@ const useStyles = makeStyles(theme => ({
 function Workbook() {
   let { id } = useParams();
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
+  const [isSaving, setIsSaving] = useState(false);
+  const [openSuccess, setOpenSuccess] = useState(false);
+  const [openError, setOpenError] = useState(false);
+  const [msgSuccess, setMsgSuccess] = useState('This is a success message!');
+  const [msgError, setMsgError] = useState('This is an error message!');
   const wbValues = useSelector(state => state);
 
   const handleChange = (event, newValue) => {
@@ -56,7 +75,36 @@ function Workbook() {
   };
 
   const handleSave = event => {
-    console.log(wbValues);
+    let document = {};
+    document.content = JSON.parse(JSON.stringify(wbValues.workbook));
+    document.content.teams = JSON.parse(JSON.stringify(wbValues.team));
+    document.content.questions = JSON.parse(JSON.stringify(wbValues.question));
+
+    setIsSaving(true);
+    domo.post(`/domo/datastores/v1/collections/${wbCollection}/documents/`, document)
+      .then(resp => {
+        setMsgSuccess('Workbook successfully saved!')
+        setOpenSuccess(true);
+      })
+      .catch(err => {
+        setMsgError(err.name + ': ' + err.message);
+        setOpenError(true);
+      })
+      .finally(() => setIsSaving(false));
+  };
+
+  const handleCloseSuccess = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenSuccess(false);
+  };
+
+  const handleCloseError = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenError(false);
   };
 
   useEffect(() => {
@@ -96,10 +144,26 @@ function Workbook() {
         <Button href="/">
           <NavigateBeforeIcon className={classes.button} />Back
         </Button>
-        <Button variant="contained" color="secondary" onClick={handleSave}>
-          <SaveIcon className={classes.button} />Save
-        </Button>
+        {isSaving ? (
+          <Box paddingLeft={4} paddingRight={4}>
+            <CircularProgress />
+          </Box>
+        ) : (
+          <Button variant="contained" color="secondary" onClick={handleSave}>
+            <SaveIcon className={classes.button} />Save
+          </Button>
+        )}
       </Grid>
+      <Snackbar open={openSuccess} autoHideDuration={6000} onClose={handleCloseSuccess}>
+        <Alert onClose={handleCloseSuccess} severity="success">
+          {msgSuccess}
+        </Alert>
+      </Snackbar>
+      <Snackbar open={openError} autoHideDuration={6000} onClose={handleCloseError}>
+        <Alert onClose={handleCloseError} severity="error">
+          {msgError}
+        </Alert>
+      </Snackbar>
     </Grid>
   );
 }

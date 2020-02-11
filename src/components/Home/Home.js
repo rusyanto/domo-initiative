@@ -1,5 +1,6 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import domo from 'ryuu.js';
 import MaterialTable from 'material-table';
 // Material table icons
 import AddBox from '@material-ui/icons/AddBox';
@@ -17,6 +18,8 @@ import Remove from '@material-ui/icons/Remove';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
+
+const wbCollection = 'Workbooks';
 
 function Home() {
   const tableIcons = {
@@ -39,7 +42,8 @@ function Home() {
     ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
   };
 
-  const [state, setState] = React.useState({
+  const [isLoading, setIsLoading] = useState(true);
+  const [state, setState] = useState({
     columns: [
       { title: 'Name', field: 'name' },
       { title: 'Created By', field: 'createdBy' },
@@ -62,6 +66,15 @@ function Home() {
   });
 
   let history = useHistory();
+
+  useEffect(() => {
+    domo.get(`/domo/datastores/v1/collections/${wbCollection}/documents/`)
+      .then(data => {
+        console.log(data);
+      })
+      .catch(e => console.log(e))
+      .finally(() => setIsLoading(false));
+  }, []);
 
   return (
     <MaterialTable
@@ -95,6 +108,7 @@ function Home() {
           onClick: (event, rowData) => history.push("/workbook/" + rowData.id)
         }
       ]}
+      isLoading={isLoading}
     />
   );
 }
