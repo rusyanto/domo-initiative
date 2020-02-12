@@ -1,5 +1,6 @@
 import React, { forwardRef, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import domo from 'ryuu.js';
 import MaterialTable from 'material-table';
 // Material table icons
@@ -18,6 +19,7 @@ import Remove from '@material-ui/icons/Remove';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
+import { OPEN_SNACKBAR_ERROR } from '../../redux/actionTypes';
 
 const wbCollection = 'Workbooks';
 
@@ -42,6 +44,7 @@ function Home() {
     ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
   };
 
+  const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
   const [state, setState] = useState({
     columns: [
@@ -72,9 +75,14 @@ function Home() {
       .then(data => {
         console.log(data);
       })
-      .catch(e => console.log(e))
+      .catch(err => {
+        dispatch({
+          type: OPEN_SNACKBAR_ERROR,
+          payload: { msg: err.name + ': ' + err.message }
+        });
+      })
       .finally(() => setIsLoading(false));
-  }, []);
+  }, [dispatch]);
 
   return (
     <MaterialTable
