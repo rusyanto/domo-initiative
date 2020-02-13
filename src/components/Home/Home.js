@@ -46,34 +46,23 @@ function Home() {
 
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
-  const [state, setState] = useState({
-    columns: [
-      { title: 'Name', field: 'name' },
-      { title: 'Created By', field: 'createdBy' },
-      { title: 'Updated Date', field: 'updatedDate', type: 'date' },
-    ],
-    data: [
-      {
-        id: 'b3ea3d2d-86c5-44e6-a2f4-985136bbbce1',
-        name: 'RMIT - Finance Dashboards',
-        createdBy: 'Mehmet Baran',
-        updatedDate: new Date('2019-12-13')
-      },
-      {
-        id: '1e61d99d-9885-419a-a33e-3be3941ee720',
-        name: 'Programmatic Media Optimisation Dashboard',
-        createdBy: 'Zerya Betül Baran',
-        updatedDate: new Date('2019-12-11')
-      },
-    ],
-  });
+  const [data, setData] = useState([]);
 
   let history = useHistory();
 
   useEffect(() => {
     domo.get(`/domo/datastores/v1/collections/${wbCollection}/documents/`)
-      .then(data => {
-        console.log(data);
+      .then(documents => {
+        let tableData = [];
+        documents.forEach(document => {
+          tableData.push({
+            id: document.id,
+            initativeName: document.content.initiativeName,
+            createdBy: document.content.createdBy,
+            updatedOn: new Date(document.updatedOn)
+          });
+        });
+        setData(tableData);
       })
       .catch(err => {
         dispatch({
@@ -88,20 +77,34 @@ function Home() {
     <MaterialTable
       icons={tableIcons}
       title="Initiative Workbooks"
-      columns={state.columns}
-      data={state.data}
+      columns={[
+        { title: 'Name', field: 'initativeName' },
+        { title: 'Created By', field: 'createdBy' },
+        { title: 'Updated Date', field: 'updatedOn', type: 'date' },
+      ]}
+      data={data}
       editable={{
         onRowDelete: oldData =>
-          new Promise(resolve => {
-            setTimeout(() => {
-              resolve();
-              setState(prevState => {
-                const data = [...prevState.data];
-                data.splice(data.indexOf(oldData), 1);
-                return { ...prevState, data };
+          // new Promise(resolve => {
+          //   setTimeout(() => {
+          //     resolve();
+          //     setData(state => {
+          //       return state.filter((workbook, index) => workbook.id !== oldData.id);
+          //     });
+          //   }, 600);
+          // }),
+          domo.delete(`/domo/datastores/v1/collections/${wbCollection}/documents/${oldData.id}`)
+            .then(resp => {
+              setData(state => {
+                return state.filter((workbook, index) => workbook.id !== oldData.id);
               });
-            }, 600);
-          }),
+            })
+            .catch(err => {
+              dispatch({
+                type: OPEN_SNACKBAR_ERROR,
+                payload: { msg: err.name + ': ' + err.message }
+              });
+            }),
       }}
       actions={[
         {

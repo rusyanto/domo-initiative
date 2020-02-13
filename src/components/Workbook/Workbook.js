@@ -71,6 +71,8 @@ function Workbook() {
     document.content = JSON.parse(JSON.stringify(state.workbook));
     document.content.teams = JSON.parse(JSON.stringify(state.team));
     document.content.questions = JSON.parse(JSON.stringify(state.question));
+    document.content.createdBy = domo.env.userName;
+    console.log(document);
 
     setIsSaving(true);
     domo.post(`/domo/datastores/v1/collections/${wbCollection}/documents/`, document)
