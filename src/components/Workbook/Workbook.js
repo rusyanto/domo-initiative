@@ -16,7 +16,10 @@ import InitiativeObjtv from '../InitiativeObjtv';
 import BusinessQns from '../BusinessQns';
 import Wireframe from '../Wireframe';
 import MetricMap from '../MetricMap';
-import { OPEN_SNACKBAR_SUCCESS, OPEN_SNACKBAR_ERROR } from '../../redux/actionTypes';
+import {
+  OPEN_SNACKBAR_SUCCESS, OPEN_SNACKBAR_ERROR,
+  INITIALIZE_WORKBOOK, INITIALIZE_TEAM, INITIALIZE_QUESTION
+} from '../../redux/actionTypes';
 
 const wbCollection = 'Workbooks';
 
@@ -72,28 +75,55 @@ function Workbook() {
     document.content.teams = JSON.parse(JSON.stringify(state.team));
     document.content.questions = JSON.parse(JSON.stringify(state.question));
     document.content.createdBy = domo.env.userName;
-    console.log(document);
 
     setIsSaving(true);
-    domo.post(`/domo/datastores/v1/collections/${wbCollection}/documents/`, document)
-      .then(resp => {
-        dispatch({
-          type: OPEN_SNACKBAR_SUCCESS,
-          payload: { msg: 'Workbook successfully saved!' }
-        });
+    if (id === 'new') {
+      domo.post(`/domo/datastores/v1/collections/${wbCollection}/documents/`, document)
+        .then(resp => {
+          dispatch({
+            type: OPEN_SNACKBAR_SUCCESS,
+            payload: { msg: 'Workbook successfully saved!' }
+          });
+        })
+        .catch(err => {
+          dispatch({
+            type: OPEN_SNACKBAR_ERROR,
+            payload: { msg: err.name + ': ' + err.message }
+          });
+        })
+        .finally(() => setIsSaving(false));
+    } else {
+      domo.put(`/domo/datastores/v1/collections/${wbCollection}/documents/${id}`, document)
+        .then(resp => {
+          dispatch({
+            type: OPEN_SNACKBAR_SUCCESS,
+            payload: { msg: 'Workbook successfully saved!' }
+          });
+        })
+        .catch(err => {
+          dispatch({
+            type: OPEN_SNACKBAR_ERROR,
+            payload: { msg: err.name + ': ' + err.message }
+          });
+        })
+        .finally(() => setIsSaving(false));
+    }
+  };
+
+  useEffect(() => {
+    domo.get(`/domo/datastores/v1/collections/${wbCollection}/documents/${id}`)
+      .then(document => {
+        dispatch({ type: INITIALIZE_WORKBOOK, payload: document.content });
+        dispatch({ type: INITIALIZE_TEAM, payload: document.content.teams });
+        dispatch({ type: INITIALIZE_QUESTION, payload: document.content.questions });
       })
       .catch(err => {
         dispatch({
           type: OPEN_SNACKBAR_ERROR,
           payload: { msg: err.name + ': ' + err.message }
         });
-      })
-      .finally(() => setIsSaving(false));
-  };
-
-  useEffect(() => {
-    console.log('Workbook id: ' + id);
-  }, [id]);
+      });
+  }, [id, dispatch]);
 
   return (
     <Grid container>

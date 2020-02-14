@@ -85,14 +85,6 @@ function Home() {
       data={data}
       editable={{
         onRowDelete: oldData =>
-          // new Promise(resolve => {
-          //   setTimeout(() => {
-          //     resolve();
-          //     setData(state => {
-          //       return state.filter((workbook, index) => workbook.id !== oldData.id);
-          //     });
-          //   }, 600);
-          // }),
           domo.delete(`/domo/datastores/v1/collections/${wbCollection}/documents/${oldData.id}`)
             .then(resp => {
               setData(state => {

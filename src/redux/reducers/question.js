@@ -1,4 +1,5 @@
 import {
+  INITIALIZE_QUESTION,
   ADD_BUSINESS_QUESTION, EDIT_BUSINESS_QUESTION, DELETE_BUSINESS_QUESTION,
   ADD_CARD, EDIT_CARD, DELETE_CARD
 } from '../actionTypes';
@@ -7,6 +8,10 @@ const initialState = [];
 
 export default function question (state = initialState, action) {
   switch (action.type) {
+    case INITIALIZE_QUESTION: {
+      return action.payload;
+    }
+
     case ADD_BUSINESS_QUESTION: {
       return [ ...state, {
         id: state.reduce((max, p) => p.id > max ? p.id : max, 0) + 1,

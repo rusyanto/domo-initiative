@@ -1,9 +1,13 @@
-import { ADD_TEAM_MEMBER, EDIT_TEAM_MEMBER, DELETE_TEAM_MEMBER } from '../actionTypes';
+import { INITIALIZE_TEAM, ADD_TEAM_MEMBER, EDIT_TEAM_MEMBER, DELETE_TEAM_MEMBER } from '../actionTypes';
 
 const initialState = [];
 
 export default function team (state = initialState, action) {
   switch (action.type) {
+    case INITIALIZE_TEAM: {
+      return action.payload;
+    }
+
     case ADD_TEAM_MEMBER: {
       return [ ...state, {
         id: state.reduce((max, p) => p.id > max ? p.id : max, 0) + 1,
