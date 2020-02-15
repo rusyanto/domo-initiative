@@ -63,6 +63,7 @@ function Workbook() {
   const dispatch = useDispatch();
   const [value, setValue] = useState(0);
   const [isSaving, setIsSaving] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const state = useSelector(state => state);
   
   const handleChange = (event, newValue) => {
@@ -111,63 +112,75 @@ function Workbook() {
   };
 
   useEffect(() => {
-    domo.get(`/domo/datastores/v1/collections/${wbCollection}/documents/${id}`)
-      .then(document => {
-        dispatch({ type: INITIALIZE_WORKBOOK, payload: document.content });
-        dispatch({ type: INITIALIZE_TEAM, payload: document.content.teams });
-        dispatch({ type: INITIALIZE_QUESTION, payload: document.content.questions });
-      })
-      .catch(err => {
-        dispatch({
-          type: OPEN_SNACKBAR_ERROR,
-          payload: { msg: err.name + ': ' + err.message }
-        });
-      });
+    if (id !== 'new') {
+      setIsLoading(true);
+      domo.get(`/domo/datastores/v1/collections/${wbCollection}/documents/${id}`)
+        .then(document => {
+          dispatch({ type: INITIALIZE_WORKBOOK, payload: document.content });
+          dispatch({ type: INITIALIZE_TEAM, payload: document.content.teams });
+          dispatch({ type: INITIALIZE_QUESTION, payload: document.content.questions });
+        })
+        .catch(err => {
+          dispatch({
+            type: OPEN_SNACKBAR_ERROR,
+            payload: { msg: err.name + ': ' + err.message }
+          });
+        })
+        .finally(() => setIsLoading(false));
+    }
   }, [id, dispatch]);
 
   return (
     <Grid container>
-      <Grid item xs={12} className={classes.tabContainer}>
-        <Tabs
-          orientation="vertical"
-          variant="scrollable"
-          value={value}
-          onChange={handleChange}
-          aria-label="Workbook tabs"
-          className={classes.tabs}
-        >
-          <Tab label="Initiative Objective" {...a11yProps(0)} className={classes.tabLabel} />
-          <Tab label="Business Questions & Metrics" {...a11yProps(1)} className={classes.tabLabel} />
-          <Tab label="Wireframe" {...a11yProps(2)} className={classes.tabLabel} />
-          <Tab label="Metric Mapping" {...a11yProps(3)} className={classes.tabLabel} />
-        </Tabs>
-        <TabPanel value={value} index={0}>
-          <InitiativeObjtv />
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          <BusinessQns />
-        </TabPanel>
-        <TabPanel value={value} index={2}>
-          <Wireframe />
-        </TabPanel>
-        <TabPanel value={value} index={3}>
-          <MetricMap />
-        </TabPanel>
-      </Grid>
-      <Grid item xs={12} className={classes.buttons}>
-        <Button href="/">
-          <NavigateBeforeIcon className={classes.button} />Back
-        </Button>
-        {isSaving ? (
-          <Box paddingLeft={4} paddingRight={4}>
-            <CircularProgress />
-          </Box>
-        ) : (
-          <Button variant="contained" color="secondary" onClick={handleSave}>
-            <SaveIcon className={classes.button} />Save
-          </Button>
-        )}
-      </Grid>
+      {isLoading ? (
+        <Grid item xs={12} style={{ textAlign: 'center', marginTop: 180 }}>
+          <CircularProgress />
+        </Grid>
+      ) : (
+        <React.Fragment>
+          <Grid item xs={12} className={classes.tabContainer}>
+            <Tabs
+              orientation="vertical"
+              variant="scrollable"
+              value={value}
+              onChange={handleChange}
+              aria-label="Workbook tabs"
+              className={classes.tabs}
+            >
+              <Tab label="Initiative Objective" {...a11yProps(0)} className={classes.tabLabel} />
+              <Tab label="Business Questions & Metrics" {...a11yProps(1)} className={classes.tabLabel} />
+              <Tab label="Wireframe" {...a11yProps(2)} className={classes.tabLabel} />
+              <Tab label="Metric Mapping" {...a11yProps(3)} className={classes.tabLabel} />
+            </Tabs>
+            <TabPanel value={value} index={0}>
+              <InitiativeObjtv />
+            </TabPanel>
+            <TabPanel value={value} index={1}>
+              <BusinessQns />
+            </TabPanel>
+            <TabPanel value={value} index={2}>
+              <Wireframe />
+            </TabPanel>
+            <TabPanel value={value} index={3}>
+              <MetricMap />
+            </TabPanel>
+          </Grid>
+          <Grid item xs={12} className={classes.buttons}>
+            <Button href="/">
+              <NavigateBeforeIcon className={classes.button} />Back
+            </Button>
+            {isSaving ? (
+              <Box paddingLeft={4} paddingRight={4}>
+                <CircularProgress />
+              </Box>
+            ) : (
+              <Button variant="contained" color="secondary" onClick={handleSave}>
+                <SaveIcon className={classes.button} />Save
+              </Button>
+            )}
+          </Grid>
+        </React.Fragment>
+      )}
     </Grid>
   );
 }
