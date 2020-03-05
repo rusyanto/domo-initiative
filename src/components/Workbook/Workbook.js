@@ -61,6 +61,7 @@ function Workbook() {
   let { id } = useParams();
   const classes = useStyles();
   const dispatch = useDispatch();
+  const [documentId, setDocumentId] = useState(id);
   const [value, setValue] = useState(0);
   const [isSaving, setIsSaving] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -78,9 +79,10 @@ function Workbook() {
     document.content.createdBy = domo.env.userName;
 
     setIsSaving(true);
-    if (id === 'new') {
+    if (documentId === 'new') {
       domo.post(`/domo/datastores/v1/collections/${wbCollection}/documents/`, document)
         .then(resp => {
+          setDocumentId(resp.id);
           dispatch({
             type: OPEN_SNACKBAR_SUCCESS,
             payload: { msg: 'Workbook successfully saved!' }
@@ -94,7 +96,7 @@ function Workbook() {
         })
         .finally(() => setIsSaving(false));
     } else {
-      domo.put(`/domo/datastores/v1/collections/${wbCollection}/documents/${id}`, document)
+      domo.put(`/domo/datastores/v1/collections/${wbCollection}/documents/${documentId}`, document)
         .then(resp => {
           dispatch({
             type: OPEN_SNACKBAR_SUCCESS,

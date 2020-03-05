@@ -235,7 +235,7 @@ function InitiativeObjtv() {
             label="Minimum Viable Product"
             multiline
             rows="20"
-            workbook={workbook.mvp}
+            value={workbook.mvp}
             onChange={handleChange('mvp')}
             fullWidth
             margin="normal"
@@ -264,7 +264,7 @@ function InitiativeObjtv() {
             label="Success Criteria"
             multiline
             rows="11"
-            workbook={workbook.successCriteria}
+            value={workbook.successCriteria}
             onChange={handleChange('successCriteria')}
             fullWidth
             margin="normal"

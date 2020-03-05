@@ -1,4 +1,4 @@
-import { 
+import {
   OPEN_SNACKBAR_SUCCESS, CLOSE_SNACKBAR_SUCCESS,
   OPEN_SNACKBAR_ERROR, CLOSE_SNACKBAR_ERROR
 } from '../actionTypes';
@@ -32,15 +32,15 @@ export default function snackbar (state = initialState, action) {
       const { msg } = action.payload;
       return {
         ...state,
-        sbOpenSuccess: true,
-        sbMsgSuccess: msg
+        sbOpenError: true,
+        sbMsgError: msg
       }
     }
 
     case CLOSE_SNACKBAR_ERROR: {
       return {
         ...state,
-        sbOpenSuccess: false
+        sbOpenError: false
       }
     }
     
